@@ -1,5 +1,5 @@
 {
-  "name": "myapp",
+  "name": "20ideas",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,8 +10,9 @@
   },
   "dependencies": {
     "@hono/node-server": "^1.11.4",
+    "@libsql/client": "^0.7.0",
     "@paralleldrive/cuid2": "^2.2.2",
-    "better-sqlite3": "^11.1.1",
+    "dotenv": "^16.4.5",
     "drizzle-orm": "^0.31.2",
     "fs": "^0.0.1-security",
     "hono": "^4.4.10",
@@ -23,7 +24,6 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.10",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

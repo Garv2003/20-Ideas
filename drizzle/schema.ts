@@ -1,6 +1,5 @@
 import { text, integer, sqliteTable } from "drizzle-orm/sqlite-core";
 import { createId } from '@paralleldrive/cuid2';
-import { sql } from "drizzle-orm";
 
 export const ideas = sqliteTable('ideas', {
     id: text('id').primaryKey().notNull().$defaultFn(() => createId()),

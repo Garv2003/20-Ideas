@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import IdeasList from "./IdeasList";
 
 const Tabs = () => {
-  const { ideas } = useIdeas();
+  const { ideas, loading, error } = useIdeas();
   const [activeTab, setActiveTab] = useState("hot");
   const searchParams = useSearchParams();
 
@@ -30,6 +30,14 @@ const Tabs = () => {
         return ideas;
     }
   };
+
+  if (loading) {
+    return <p className="text-lg font-bold text-center mt-10">Loading...</p>;
+  }
+
+  if (error) {
+    return <p className="text-lg font-bold text-center mt-10">{error}</p>;
+  }
 
   return (
     <div>

@@ -9,7 +9,7 @@ const IdeaItem = ({ idea, index }: { idea: IdeasSchema; index: number }) => {
     return `${date.toLocaleDateString()}`;
   }, [idea.createdAt]);
 
-  const UpVote = async (id: string) => {
+  function UpVote_Frontend(id: string) {
     const newIdeas = ideas.map((idea) => {
       if (idea.id === id) {
         return { ...idea, votes: idea.votes + 1 };
@@ -17,23 +17,9 @@ const IdeaItem = ({ idea, index }: { idea: IdeasSchema; index: number }) => {
       return idea;
     });
     setIdeas(newIdeas);
-    try {
-      await fetch(`/api/ideas/${id}/upvote`, {
-        method: "PUT",
-      });
-    } catch (error) {
-      console.error(error);
-      const newIdeas = ideas.map((idea) => {
-        if (idea.id === id) {
-          return { ...idea, votes: idea.votes - 1 };
-        }
-        return idea;
-      });
-      setIdeas(newIdeas);
-    }
-  };
+  }
 
-  const DownVote = async (id: string) => {
+  const DownVote_Frontend = (id: string) => {
     const newIdeas = ideas.map((idea) => {
       if (idea.id === id) {
         return { ...idea, votes: idea.votes - 1 };
@@ -41,19 +27,29 @@ const IdeaItem = ({ idea, index }: { idea: IdeasSchema; index: number }) => {
       return idea;
     });
     setIdeas(newIdeas);
+  };
+
+  const UpVote = async (id: string) => {
+    UpVote_Frontend(id);
+    try {
+      await fetch(`/api/ideas/${id}/upvote`, {
+        method: "PUT",
+      });
+    } catch (error) {
+      console.error(error);
+      DownVote_Frontend(id);
+    }
+  };
+
+  const DownVote = async (id: string) => {
+    DownVote_Frontend(id);
     try {
       await fetch(`/api/ideas/${id}/downvote`, {
         method: "PUT",
       });
     } catch (error) {
       console.error(error);
-      const newIdeas = ideas.map((idea) => {
-        if (idea.id === id) {
-          return { ...idea, votes: idea.votes + 1 };
-        }
-        return idea;
-      });
-      setIdeas(newIdeas);
+      UpVote_Frontend(id);
     }
   };
 
